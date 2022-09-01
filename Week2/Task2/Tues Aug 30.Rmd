@@ -19,13 +19,14 @@ sin(pi/4)
 x <- 10/3
 ``` 
 
-#Names allowed: Sabrina, David
+#Names allowed: Sabrina, Seth
 #Names not allowed: Ruth, Ross because they start with the letter R
 
 (MySequence <- seq(1, 50, length.out = 7))
 
 ```{r}
-
+my_vector <- c(1, 5, 12, 31, 19)
+my_vector
 ```
 
 7+5==12
