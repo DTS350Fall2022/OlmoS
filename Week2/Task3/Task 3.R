@@ -16,9 +16,9 @@ ggplot(data = iris, aes(x = Petal.Length, y = Petal.Width, color = Species, shap
   geom_point(inherit.aes = TRUE) +
   geom_smooth(aes(x=Petal.Length, y=Petal.Width), method = lm, se = FALSE, inherit.aes = FALSE) 
 
-ggplot(data = iris, mapping = aes(x = Sepal.Length, fill = Species)) +
-  geom_bar(alpha = 1, color = "black", position = "stack") +
-  geom_vline(xintercept = mean(iris$Sepal.Length), linetype = "dashed", color = "grey")
+ggplot(data = iris, mapping = aes(x = Sepal.Length, fill = Species)) + 
+  geom_histogram(binwidth = 0.25, color = "black", position = "stack") +
+  geom_vline(xintercept = mean(iris$Sepal.Length), linetype = "dashed", color = "grey") 
 
 #What patterns can we observe about the different dimensions of each type of flower?
 #We can clearly see that each species of flower sits in its own section of the 
