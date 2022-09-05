@@ -1,0 +1,37 @@
+---
+title: "Case Study 2"
+author: "Sabrina Olmo"
+date: "9/3/2022"
+output: 
+  html_document:
+    theme: cosmo
+    keep_md:  true 
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+library(tidyverse)
+
+urlfile = "https://github.com/WJC-Data-Science/DTS350/raw/master/coral.csv"
+dat <- read_csv(url(urlfile))
+
+str(dat)
+summary(dat)
+head(dat)
+```
+
+```{r}
+ggplot() +
+  geom_col(dat, mapping = aes(x = Year, y = Value, fill = Event)) +
+  facet_wrap(~Entity, ncol = 2) +
+  scale_fill_manual(values=c("Light Sky Blue", "Light Coral"))
+```
+
+```{r}
+ggplot() +
+  geom_smooth(dat, mapping = aes(x = Year, y = Value, fill = Entity, color = Entity)) +
+  facet_wrap(~Entity) 
+```
+  
+  
