@@ -4,7 +4,6 @@ author: "Sabrina Olmo"
 date: "9/3/2022"
 output: 
   html_document:
-    theme: cosmo
     keep_md:  TRUE 
 ---
 
