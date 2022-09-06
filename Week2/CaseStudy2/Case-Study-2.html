@@ -180,7 +180,9 @@ pre code {
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()</code></pre>
-<pre class="r"><code>urlfile = &quot;https://github.com/WJC-Data-Science/DTS350/raw/master/coral.csv&quot;
+<pre class="r"><code>library(knitr)
+
+urlfile = &quot;https://github.com/WJC-Data-Science/DTS350/raw/master/coral.csv&quot;
 dat &lt;- read_csv(url(urlfile))</code></pre>
 <pre><code>## Rows: 370 Columns: 5
 ## ── Column specification ────────────────────────────────────────────────────────

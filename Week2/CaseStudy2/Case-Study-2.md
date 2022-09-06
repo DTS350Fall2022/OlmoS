@@ -25,6 +25,8 @@ library(tidyverse)
 ```
 
 ```r
+library(knitr)
+
 urlfile = "https://github.com/WJC-Data-Science/DTS350/raw/master/coral.csv"
 dat <- read_csv(url(urlfile))
 ```
