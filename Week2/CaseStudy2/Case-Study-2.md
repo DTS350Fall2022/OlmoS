@@ -110,6 +110,10 @@ ggplot() +
 
 ![](Case-Study-2_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
 
+```r
+#By looking at the histograms, I would not say there is an obvious trend that bleaching is more frequent because there are many peaks in the data. I did notice that whenever there was a severe bleaching eventm the next few years would have a lower volume of bleaching events.
+```
+
 
 ```r
 ggplot() +
@@ -122,5 +126,8 @@ ggplot() +
 ```
 
 ![](Case-Study-2_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
-  
+
+```r
+#This geom_smooth visualization can help us see the trends with the margin of error for each event. However we can not distinguish between the different events, so we just see an overall patter.
+```
   

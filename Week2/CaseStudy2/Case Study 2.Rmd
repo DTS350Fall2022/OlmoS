@@ -24,12 +24,15 @@ ggplot() +
   geom_col(dat, mapping = aes(x = Year, y = Value, fill = Event)) +
   facet_wrap(~Entity, ncol = 2) +
   scale_fill_manual(values=c("Light Sky Blue", "Light Coral"))
+
+#By looking at the histograms, I would not say there is an obvious trend that bleaching is more frequent because there are many peaks in the data. I did notice that whenever there was a severe bleaching eventm the next few years would have a lower volume of bleaching events.
 ```
 
 ```{r}
 ggplot() +
   geom_smooth(dat, mapping = aes(x = Year, y = Value, fill = Entity, color = Entity)) +
   facet_wrap(~Entity) 
+
+#This geom_smooth visualization can help us see the trends with the margin of error for each event. However we can not distinguish between the different events, so we just see an overall patter.
 ```
-  
   
