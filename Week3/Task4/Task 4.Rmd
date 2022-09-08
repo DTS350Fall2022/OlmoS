@@ -47,6 +47,8 @@ species_mean_sd <- group_by(iris, Species) %>%
 
 Have the rates of Covid tests gone down since the vaccine was administered?
 
+Have the rates of hospitalization due to covid gone down since the covid vaccine was administered?
+
 How many jobs have been affected by the covid pandemic, going remote, hybrid, fully in person?
 
 I received feedback from 6 people and each of them were interested in the two questions I posed. One specific piece of feedback was that my second question was not specific enough at first so I made a modification to it by adding the three different job types.
