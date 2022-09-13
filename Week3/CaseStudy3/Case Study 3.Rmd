@@ -1,0 +1,48 @@
+---
+title: "Case Study 3"
+author: "Sabrina Olmo"
+date: "9/10/2022"
+output: 
+  html_document:
+    keep_md:  TRUE 
+    code_folding: 'hide'
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+library(tidyverse)
+library(downloader)
+library(knitr)
+library(gapminder)
+```
+
+```{r}
+str(gapminder)
+dat <- filter(gapminder, country != "Kuwait")
+```
+
+```{r Plot 1}
+ggplot(dat) +
+  geom_point(mapping = aes(x = lifeExp, y = gdpPercap, 
+                           size = (pop/100000), color = continent)) +
+  facet_grid(~year) +
+  scale_y_continuous(trans = 'sqrt') +
+  xlab("Life Expectancy") +
+  ylab("GDP per Capita") +
+  labs(color = "Continent", size = "Population (100k)") +
+  theme_bw()
+
+```
+
+```{r Plot 2}
+w_mean <- dat %>%
+  group_by(year, continent) %>%
+  summarize(w_avg = weighted.mean(gdpPercap), population = pop/100000)
+
+ggplot() +
+  geom_point(dat, mapping = aes(x = year, y = gdpPercap, color = continent)) +
+  geom_path(dat, mapping = aes(x = year, y = gdpPercap, color = continent)) +
+  geom_point(w_mean, mapping = aes(x = year, y = w_avg, size = population)) +
+  facet_wrap(~continent, nrow = 2)
+```
