@@ -1,0 +1,77 @@
+---
+title: "Task 5"
+author: "Sabrina Olmo"
+date: "9/8/2022"
+output: 
+  html_document:
+    keep_md:  TRUE 
+    code_folding: 'hide'
+editor_options: 
+  chunk_output_type: console
+
+---
+
+```{r}
+library(tidyverse)
+library(downloader)
+library(knitr)
+```
+
+```{r}
+SoloData <- read_csv("solo-artist-followers.csv")
+BillboardData <- read_csv("billboard-hits.csv")
+```
+
+For the SoloData, all of the data types are chrs, for the BillboardData there are 3 chr types one date type and a dbl. All of the data imported correctly.
+
+```{r}
+head(BillboardData)
+head(SoloData)
+times_top_100 <- BillboardData %>%
+                    filter(is.na(band) == FALSE) %>%                 
+                    group_by(name, band) %>%
+                    summarise(appearance = n()) %>%
+                    filter(appearance > 6, na.rm = TRUE)
+
+Solo_artist <- BillboardData %>%
+  filter(name %in% times_top_100$name)
+  
+Bands <- BillboardData %>%
+  filter(is.na(band) == TRUE) %>%
+  filter(name %in% times_top_100$band)%>%
+  mutate(band = name)
+
+head(Bands)
+head(times_top_100)
+
+ggplot() +
+  geom_point(Solo_artist, mapping = aes(x = peak_date, y = peak_rank, 
+                                          color = name, group = name)) +
+  geom_line(Solo_artist, mapping = aes(x = peak_date, y = peak_rank, 
+                                          color = name, group = name)) +
+  geom_point(Bands, mapping = aes(x = peak_date, y = peak_rank), color = "black") +
+  geom_line(Bands, mapping = aes(x = peak_date, y = peak_rank), 
+                                 color = "black", linetype = "dotted") +
+  facet_wrap(~band, scales = "free")
+```
+
+```{r Data Set 1}
+read_csv("covid-hospital.csv")
+```
+
+https://github.com/owid/covid-19-data/tree/master/public/data/hospitalizations
+This source contains COVID hospital data from March 2020 to September 2022. The data shows the number of people hospitalized in different countries on given days.
+```{r Data Set 2}
+read_csv("covid-daily-tests.csv")
+```
+
+https://ourworldindata.org/coronavirus-testing#testing-for-covid-19-background-the-our-world-in-data-covid-19-testing-dataset
+This source gives covid testing information from Janurary 2020 to June 2022. The number of tests by thousand is recored on a 7 day period. 
+
+```{r Data Set 3}
+library(readxl)
+read_xlsx("covid19-table1.xlsx")
+```
+
+https://www.bls.gov/cps/effects-of-the-coronavirus-covid-19-pandemic.htm
+This data set contains information about employees who have worked at home due to covid in the last month by demographic.
