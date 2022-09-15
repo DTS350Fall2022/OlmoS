@@ -1,0 +1,97 @@
+---
+title: "Task 6"
+author: "Sabrina Olmo"
+date: "9/13/2022"
+output: 
+  html_document:
+    keep_md:  TRUE 
+    code_folding: 'hide'
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+library(tidyverse)
+library(ggrepel)
+library(knitr)
+library(lubridate)
+?iris
+```
+
+```{r Iris Vizualization}
+mutate(iris, "Label")
+
+largest_width <- iris %>%
+  group_by(Species) %>%
+  filter(row_number(desc(Petal.Width)) == 1) %>%
+  mutate(Label = "Largest Petal Width")
+
+largest_length <- iris %>%
+  group_by(Species) %>%
+  filter(row_number(desc(Petal.Length)) == 1) %>%
+  mutate(Label = "Largest Petal Length")
+  
+ggplot(data = iris, mapping = aes(x = Sepal.Length, 
+                                  y = Sepal.Width, 
+                                  color = Species,
+                                  shape = Species)) +
+  geom_point(aes(color = Species, shape = Species)) +
+  geom_point(size = 3, shape = 1, color = "black", data = largest_width) +
+  geom_point(size = 3, shape = 1, color = "black", data = largest_length) +
+  geom_text(aes(color = Species, label = Label), data = largest_width, 
+            hjust = "left", vjust = "top") +
+  geom_text(aes(color = Species, label = Label), data = largest_length, 
+            hjust = "center", vjust = "top") +
+  scale_y_log10() +
+  labs(x = "Sepal Length (cm)",
+       y = "Sepal Width (cm)",
+       shape = "Species",
+       color = "Species",
+       title = "Different Iris Species Have Different Sepal Sizes",
+       subtitle = "The Largest Petal Sizes For Each Species Do Not Correspond To The Largest Sepal Sizes") +
+  theme(legend.position = "bottom")
+```
+
+```{r Scrabble Visualization}
+download.file("https://github.com/fivethirtyeight/data/raw/master/scrabble-games/scrabble_games.csv", "Scrabble")
+
+ScrabbleData <- read_csv("Scrabble")
+
+str(ScrabbleData)
+
+ScrabbleAll <- ScrabbleData %>%
+  select(date, winnerscore, loserscore) %>%
+  pivot_longer(c("winnerscore","loserscore"), names_to = "win-loss", values_to = "score") %>%
+  filter(score > 0) %>%
+  mutate(year = year(date),
+         week = week(date))
+
+Scrabble_avg <- ScrabbleAll %>%
+  group_by(year, week) %>%
+  summarise(avgscore = mean(score), Date = min(date))
+
+average_05 <- Scrabble_avg %>%
+  filter(year == "2005")
+
+average_06 <- Scrabble_avg %>%
+  filter(year == "2006")
+
+ggplot(data = Scrabble_avg, mapping = aes(x = Date, y = avgscore)) +
+  geom_point(data = average_05) +
+  geom_point(data = average_06) +
+  geom_smooth(data = average_05, method = 'lm', color = "orange") +
+  geom_smooth(data = average_06, method = 'lm', color = "blue") +
+  geom_vline(xintercept = as.Date("2006-03-01"), linetype = "dotted") + 
+  annotate ("text", x = as.Date("2005-07-05"), y = 380, label = "Trend Before", 
+            size = 3, color = "orange") +
+  annotate ("text", x = as.Date("2006-06-05"), y = 380, label = "Trend After", 
+            size = 3, color = "blue") +
+  annotate("text", x = as.Date("2006-03-05"), y = 390, label = "Dictionary\nUpdated", 
+           size = 3.5) +
+  labs(y = "Average Score",
+       title = "Scrabble Scores in the age of 'QI' and 'ZA'",
+       subtitle = "Weekly average scores before and after the addition 
+                   of around 11,000 words to the Scrabble dictionary",
+       caption = "Source: FiveThirtyEight") +
+  theme_bw()
+```
