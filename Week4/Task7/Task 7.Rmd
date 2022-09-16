@@ -1,0 +1,60 @@
+---
+title: "Task 7"
+author: "Sabrina Olmo"
+date: "9/15/2022"
+output: 
+  html_document:
+    keep_md:  TRUE 
+    code_folding: 'hide'
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+library(tidyverse)
+library(knitr)
+download.file("https://raw.githubusercontent.com/hadley/r4ds/master/data/heights.csv", "Height")
+HeightData <- read_csv("Height")
+str(HeightData)
+```
+
+```{r}
+HeightEd <- HeightData %>%
+              mutate(ed = fct_collapse(as.factor(ed),
+                            primary = c("3","4","5","6"),
+                            secondary = c("7","8","9","10","11"),
+                            highschoolgrad = ("12"),
+                            associate = c("13","14","15"),
+                            bachelors = ("16"),
+                            mastersdoctorate = c("17","18"))) 
+```
+
+```{r}
+ggplot(HeightEd) +
+  geom_bar(aes(x = ed, fill = race), position = "dodge") +
+  labs(title = "Race by Education Level",
+       x = "Education Level",
+       y = "Count")
+
+ggplot(HeightEd) +
+  geom_bar(aes(x = ed, fill = sex), position = "dodge") +
+  labs(title = "Sex by Education Level",
+       x = "Education Level",
+       y = "Count")
+
+Earning_Edu <- filter(HeightEd, ed %in% c("highschoolgrad", "associate", "bachelors", "mastersdoctorate")) 
+
+arrow_data1 <- data.frame(x1 = "associate", y1 = 175000, x2 = "bachelors", y2 = 175000)
+
+ggplot(Earning_Edu) +
+  geom_boxplot(aes(x = ed, y = earn, fill = sex)) +
+  geom_segment(aes(x = x1, y = y1, xend = x2, yend = y2), color = "blue", data = arrow_data1,
+               arrow = arrow(length = unit(0.1, "in"))) +
+  labs(title = "Earnings by Education Level Split Between Men and Women ",
+       x = "Education Level",
+       y = "Earnings") +
+  annotate("text", x = "associate", y = 150000, label = "Highest paid Bachelors level man makes 
+           more than highest paid Masters level woman", size = 3.5)
+```
+
+Looking at the data, we can see that women do not get paid as much as men even though they have the same education levels. In some cases, a man with a lower education level than a woman could get paid more even though she went further in school. Using a boxplot allowed me to see the gender discrepencies a bit better because it includes the average range of pay for each gender. A few of the male boxes have a wider range which shows that men have a wider pay range than women in some cases.
