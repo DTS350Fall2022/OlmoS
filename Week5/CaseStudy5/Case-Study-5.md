@@ -28,6 +28,7 @@ library(tidyverse)
 
 ```r
 library(readr)
+library(knitr)
 
 download.file("https://raw.githubusercontent.com/fivethirtyeight/guns-data/master/full_data.csv", "GunData")
 
