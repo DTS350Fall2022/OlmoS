@@ -1,0 +1,68 @@
+---
+title: "Task 9"
+author: "Sabrina Olmo"
+date: "9/22/2022"
+output: 
+  html_document:
+    keep_md:  TRUE 
+    code_folding: 'hide'
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+library(tidyverse)
+library(lubridate)
+library(knitr)
+?ToothGrowth
+head(ToothGrowth)
+```
+
+```{r Tooth Plot 1}
+ggplot(ToothGrowth, aes(x = dose, y = len, color = supp)) +
+  geom_point() +
+  facet_grid(~supp) +
+  labs(title = "Tooth Growth vs Dose",
+       x = "Dose (mg/day)",
+       y = "Length") +
+  theme_bw() +
+  theme(legend.position = "none")
+```
+I chose to use a scatter plot for this because I thought it would be able to clearly show the trends in tooth growth based on the dosage. I faceted them by the two different supplements to show the difference between the two supplements. 
+
+```{r Tooth Plot 2}
+ggplot(ToothGrowth) +
+  geom_boxplot(aes(x = dose, y = len, fill = supp)) +
+  facet_grid(supp~dose) +
+    labs(title = "Tooth Growth vs Dose",
+       x = "Dose (mg/day)",
+       y = "Length") +
+  theme(legend.position = "none")
+```
+I chose to use a box plot for this information because I thought it would be easiest to compare the mean lengths for each supplement by the dosage. Box plots also make it easier to see the ranges of lengths which could be helpful. 
+
+```{r Economics Plot 1}
+?economics
+str(economics)
+
+econ <- economics %>%
+          mutate(year = year(date)) 
+
+ggplot(econ, aes(x = year, y = unemploy)) +
+  geom_line() +
+  labs(title = "Number of People Unemployed per Year",
+       x = "Year",
+       y = "Number of People Enemployed (Thousands)") +
+  theme_light()
+```
+I wanted to use a line plot to be able to see change over time. In this case, I wanted to see how the unemployment numbers have changed, and you can clearly see which years had issues. It is obvious that the 2008 recession effected many jobs because it looks like the highest number of people were unemployed then.
+
+```{r Economics Plot 2}
+ggplot(econ) +
+  geom_line(aes(x = year, y = psavert)) +
+  labs(title = "Personal Savings Rates in Percentage per Year",
+       x = "Year",
+       y = "Personal Savings Rate (%)")+
+  theme_bw()
+```
+A line plot is also the best plot for this information to show how personal savings rates have changed over time. We can see that this graphs trends are similar to the unemployment graph where the lower the personal savings rates, the higher the number of unemployed. 
