@@ -103,10 +103,10 @@ Plot1$month <- as.integer(Plot1$month)
 SeasonData <- Plot1 %>%
   mutate(season =
            case_when(
+             month <= 2 | month == 12 ~ "Winter",
              month >= 3 & month <= 5 ~ "Spring",
              month >= 6 & month <= 8 ~ "Summer",
-             month >= 9 & month <= 11 ~ "Fall",
-             month <= 2 | month == 12 ~ "Winter"))
+             month >= 9 & month <= 11 ~ "Fall"))
 
 ggplot(SeasonData, aes(x = agegroup)) +
   geom_bar(aes(fill = season), position = "dodge") +
@@ -129,4 +129,4 @@ ggplot(SeasonData) +
 ```
 
 ![](Case-Study-5_files/figure-html/Graph 4-1.png)<!-- -->
-I chose to show this graph because I wanted to see the breakdown of the ages of death by each race. The most obvious trends we see are that white people are more likely to be harmed between the ages of 35-64 and black people are more likely to be harmed between the ages of 15-34. We can also see that for the most part, gun deaths are more common during the summer months. So a client can market their commericals during the summer months more towards middle aged white people and younger black people.
+I chose to show this graph because I wanted to see the breakdown of the ages of death by each race. The most obvious trends we see are that white people are more likely to be harmed between the ages of 35-64 and black people are more likely to be harmed between the ages of 15-34. We can also see that for the most part, gun deaths are more common during the summer months. So a client can market their commercials during the summer months more towards middle aged white people and younger black people.
