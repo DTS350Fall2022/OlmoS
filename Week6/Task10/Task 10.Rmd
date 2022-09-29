@@ -20,7 +20,7 @@ download.file("https://raw.githubusercontent.com/martinerin/myrepo/master/financ
 Healthcare <- read_csv("Healthcare")
 ```
 
-```{r Making the Plot}
+```{r HealthcarePlot}
 ChildData <- Healthcare %>%
               select(year, country, continent, child_mort) %>%
               drop_na(continent, child_mort)

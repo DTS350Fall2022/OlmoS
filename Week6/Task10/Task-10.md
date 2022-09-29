@@ -49,5 +49,5 @@ ggplot(ChildData) +
   theme(legend.position = "none") 
 ```
 
-![](Task-10_files/figure-html/Making the Plot-1.png)<!-- -->
+![](Task-10_files/figure-html/HealthcarePlot-1.png)<!-- -->
 I chose to make a histogram to show the frequency of child mortality rates. Using a histogram allows us to compare the frequency of a certain range of events happening. I wanted to facet the graph by continent, and by doing this, we can see that the continent of Africa has the overall highest quantity of child mortalities, with around 400 child mortalities happening over 2000 times over the last 200 plus years. We can also see that the continent of Oceania has by far the lowest occurrences of child mortalities. These numbers can say a lot about a continent's economic status, and it is clear which continents are doing better than others.
