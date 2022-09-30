@@ -1,0 +1,44 @@
+---
+title: "Task 11"
+author: "Sabrina Olmo"
+date: "9/29/2022"
+output: 
+  html_document:
+    keep_md:  TRUE 
+    code_folding: 'hide'
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(knitr)
+```
+
+```{r, include=FALSE}
+temp <- tempfile()
+download.file("https://raw.githubusercontent.com/fivethirtyeight/data/master/fandango/fandango_score_comparison.csv", "temp")
+Fandango <- read_csv("temp")
+```
+
+```{r}
+FandangoFix <- Fandango %>%
+                select(FILM, RT_norm_round, Fandango_Stars, IMDB_norm_round, Metacritic_norm_round) %>%
+                pivot_longer(2:5, names_to = "critic", values_to = "rating") %>%
+                mutate(critic = fct_recode(critic,
+                                           "Rotten Tomatoes" = "RT_norm_round",
+                                           "Fandango" = "Fandango_Stars",
+                                           "IMDB" = "IMDB_norm_round",
+                                           "Metacritic" = "Metacritic_norm_round"))
+kable(head(FandangoFix, n = 20))
+```
+
+```{r}
+ggplot(FandangoFix) +
+  geom_jitter(aes(x = rating, y = critic, color = critic)) +
+  labs(title = "Movie Ratings by Critic",
+       subtitle = "The ratings are normalized on a scale of 0 to 5",
+       x = "Rating",
+       y = "Critic")
+```
+I chose to use the geom jitter because I wanted to show the spread of each critics scores. I could have used a box plot, but I wanted to show each individual score movies received. We can see that Fandango tends to rate movies higher, and Rotten Tomatoes tends to be all over the board with their ratings. 
