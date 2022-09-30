@@ -22,11 +22,11 @@ str(gapminder)
 dat <- filter(gapminder, country != "Kuwait")
 ```
 
-```{r Plot 1}
+```{r Plot1}
 ggplot(dat) +
   geom_point(mapping = aes(x = lifeExp, y = gdpPercap, 
                            size = (pop/100000), color = continent)) +
-  facet_grid(~year) +
+  facet_wrap(~year, nrow = 2) +
   scale_y_continuous(trans = 'sqrt') +
   xlab("Life Expectancy") +
   ylab("GDP per Capita") +
@@ -35,7 +35,7 @@ ggplot(dat) +
 
 ```
 
-```{r Plot 2}
+```{r Plot2}
 w_mean <- dat %>%
   group_by(year, continent) %>%
   summarize(w_avg = weighted.mean(gdpPercap), population = pop/100000)

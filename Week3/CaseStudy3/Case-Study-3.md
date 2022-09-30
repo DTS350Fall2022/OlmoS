@@ -17,13 +17,13 @@ library(tidyverse)
 
 ```
 ## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
-## ✓ ggplot2 3.3.5     ✓ purrr   0.3.4
-## ✓ tibble  3.1.6     ✓ dplyr   1.0.8
-## ✓ tidyr   1.2.0     ✓ stringr 1.4.0
-## ✓ readr   2.1.2     ✓ forcats 0.5.1
+## ✔ ggplot2 3.3.5     ✔ purrr   0.3.4
+## ✔ tibble  3.1.6     ✔ dplyr   1.0.8
+## ✔ tidyr   1.2.0     ✔ stringr 1.4.0
+## ✔ readr   2.1.2     ✔ forcats 0.5.1
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-## x dplyr::filter() masks stats::filter()
-## x dplyr::lag()    masks stats::lag()
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()
 ```
 
 ```r
@@ -56,7 +56,7 @@ dat <- filter(gapminder, country != "Kuwait")
 ggplot(dat) +
   geom_point(mapping = aes(x = lifeExp, y = gdpPercap, 
                            size = (pop/100000), color = continent)) +
-  facet_grid(~year) +
+  facet_wrap(~year, nrow = 2) +
   scale_y_continuous(trans = 'sqrt') +
   xlab("Life Expectancy") +
   ylab("GDP per Capita") +
@@ -64,7 +64,7 @@ ggplot(dat) +
   theme_bw()
 ```
 
-![](Case-Study-3_files/figure-html/Plot 1-1.png)<!-- -->
+![](Case-Study-3_files/figure-html/Plot1-1.png)<!-- -->
 
 
 ```r
@@ -86,4 +86,4 @@ ggplot() +
   facet_wrap(~continent, nrow = 2)
 ```
 
-![](Case-Study-3_files/figure-html/Plot 2-1.png)<!-- -->
+![](Case-Study-3_files/figure-html/Plot2-1.png)<!-- -->
