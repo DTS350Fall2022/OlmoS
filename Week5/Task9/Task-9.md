@@ -17,13 +17,13 @@ library(tidyverse)
 
 ```
 ## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
-## ✓ ggplot2 3.3.5     ✓ purrr   0.3.4
-## ✓ tibble  3.1.6     ✓ dplyr   1.0.8
-## ✓ tidyr   1.2.0     ✓ stringr 1.4.0
-## ✓ readr   2.1.2     ✓ forcats 0.5.1
+## ✔ ggplot2 3.3.5     ✔ purrr   0.3.4
+## ✔ tibble  3.1.6     ✔ dplyr   1.0.8
+## ✔ tidyr   1.2.0     ✔ stringr 1.4.0
+## ✔ readr   2.1.2     ✔ forcats 0.5.1
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-## x dplyr::filter() masks stats::filter()
-## x dplyr::lag()    masks stats::lag()
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()
 ```
 
 ```r
@@ -67,7 +67,7 @@ ggplot(ToothGrowth, aes(x = dose, y = len, color = supp)) +
   theme(legend.position = "none")
 ```
 
-![](Task-9_files/figure-html/Tooth Plot 1-1.png)<!-- -->
+![](Task-9_files/figure-html/ToothPlot1-1.png)<!-- -->
 I chose to use a scatter plot for this because I thought it would be able to clearly show the trends in tooth growth based on the dosage. I faceted them by the two different supplements to show the difference between the two supplements. 
 
 
@@ -81,7 +81,7 @@ ggplot(ToothGrowth) +
   theme(legend.position = "none")
 ```
 
-![](Task-9_files/figure-html/Tooth Plot 2-1.png)<!-- -->
+![](Task-9_files/figure-html/ToothPlot2-1.png)<!-- -->
 I chose to use a box plot for this information because I thought it would be easiest to compare the mean lengths for each supplement by the dosage. Box plots also make it easier to see the ranges of lengths which could be helpful. 
 
 
@@ -112,7 +112,7 @@ ggplot(econ, aes(x = year, y = unemploy)) +
   theme_light()
 ```
 
-![](Task-9_files/figure-html/Economics Plot 1-1.png)<!-- -->
+![](Task-9_files/figure-html/EconomicsPlot1-1.png)<!-- -->
 I wanted to use a line plot to be able to see change over time. In this case, I wanted to see how the unemployment numbers have changed, and you can clearly see which years had issues. It is obvious that the 2008 recession effected many jobs because it looks like the highest number of people were unemployed then.
 
 
@@ -125,5 +125,5 @@ ggplot(econ) +
   theme_bw()
 ```
 
-![](Task-9_files/figure-html/Economics Plot 2-1.png)<!-- -->
+![](Task-9_files/figure-html/EconomicsPlot2-1.png)<!-- -->
 A line plot is also the best plot for this information to show how personal savings rates have changed over time. We can see that this graphs trends are similar to the unemployment graph where the lower the personal savings rates, the higher the number of unemployed. 

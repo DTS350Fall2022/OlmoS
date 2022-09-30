@@ -18,7 +18,7 @@ library(knitr)
 head(ToothGrowth)
 ```
 
-```{r Tooth Plot 1}
+```{r ToothPlot1}
 ggplot(ToothGrowth, aes(x = dose, y = len, color = supp)) +
   geom_point() +
   facet_grid(~supp) +
@@ -30,7 +30,7 @@ ggplot(ToothGrowth, aes(x = dose, y = len, color = supp)) +
 ```
 I chose to use a scatter plot for this because I thought it would be able to clearly show the trends in tooth growth based on the dosage. I faceted them by the two different supplements to show the difference between the two supplements. 
 
-```{r Tooth Plot 2}
+```{r ToothPlot2}
 ggplot(ToothGrowth) +
   geom_boxplot(aes(x = dose, y = len, fill = supp)) +
   facet_grid(supp~dose) +
@@ -41,7 +41,7 @@ ggplot(ToothGrowth) +
 ```
 I chose to use a box plot for this information because I thought it would be easiest to compare the mean lengths for each supplement by the dosage. Box plots also make it easier to see the ranges of lengths which could be helpful. 
 
-```{r Economics Plot 1}
+```{r EconomicsPlot1}
 ?economics
 str(economics)
 
@@ -57,7 +57,7 @@ ggplot(econ, aes(x = year, y = unemploy)) +
 ```
 I wanted to use a line plot to be able to see change over time. In this case, I wanted to see how the unemployment numbers have changed, and you can clearly see which years had issues. It is obvious that the 2008 recession effected many jobs because it looks like the highest number of people were unemployed then.
 
-```{r Economics Plot 2}
+```{r EconomicsPlot2}
 ggplot(econ) +
   geom_line(aes(x = year, y = psavert)) +
   labs(title = "Personal Savings Rates in Percentage per Year",
