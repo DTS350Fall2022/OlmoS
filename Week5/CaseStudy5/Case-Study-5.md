@@ -17,20 +17,20 @@ library(tidyverse)
 
 ```
 ## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
-## ✓ ggplot2 3.3.5     ✓ purrr   0.3.4
-## ✓ tibble  3.1.6     ✓ dplyr   1.0.8
-## ✓ tidyr   1.2.0     ✓ stringr 1.4.0
-## ✓ readr   2.1.2     ✓ forcats 0.5.1
+## ✔ ggplot2 3.3.5     ✔ purrr   0.3.4
+## ✔ tibble  3.1.6     ✔ dplyr   1.0.8
+## ✔ tidyr   1.2.0     ✔ stringr 1.4.0
+## ✔ readr   2.1.2     ✔ forcats 0.5.1
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-## x dplyr::filter() masks stats::filter()
-## x dplyr::lag()    masks stats::lag()
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()
 ```
 
 ```r
 library(readr)
 library(knitr)
 
-download.file("https://raw.githubusercontent.com/fivethirtyeight/guns-data/master/full_data.csv", "GunData")
+#download.file("https://raw.githubusercontent.com/fivethirtyeight/guns-data/master/full_data.csv", "GunData")
 
 GunData <- read_csv("GunData")
 ```
@@ -69,7 +69,7 @@ ggplot(Plot1, aes(x = agegroup, fill = sex)) +
   theme_bw()
 ```
 
-![](Case-Study-5_files/figure-html/Graph 1-1.png)<!-- -->
+![](Case-Study-5_files/figure-html/Graph1-1.png)<!-- -->
 This graph is showing the number of deaths split up by intent. By looking at the graphs, suicide and homicide are the most common causes of death by guns. Since this is a stacked bar chart, we can see that more males have been killed by guns than females have in all four categories. 
 
 
@@ -94,7 +94,7 @@ ggplot(GunData, aes(x = age)) +
 ## Warning: Removed 1 rows containing missing values (position_stack).
 ```
 
-![](Case-Study-5_files/figure-html/Graph 2-1.png)<!-- -->
+![](Case-Study-5_files/figure-html/Graph2-1.png)<!-- -->
 This graph is a density plot that shows the trends of causes of death separated by sex. Each peak shows us which values are at its highest concentration. We can see that the homicide peak is highest before the age of 30 for both men and women and the suicide peak is highest after the age of 60 for both men and women as well.
 
 
@@ -116,7 +116,7 @@ ggplot(SeasonData, aes(x = agegroup)) +
   theme_bw()
 ```
 
-![](Case-Study-5_files/figure-html/Graph 3-1.png)<!-- -->
+![](Case-Study-5_files/figure-html/Graph3-1.png)<!-- -->
 I chose to do the graph in this way because I wanted to see if the seasons had a different impact on gun deaths when it comes to a person's age. Around winter you usually hear about seasonal depression which may lead to a jump in suicides, but this data does not seem to support that theory too much. In fact, the suicide deaths by gun are actually lowest in the winter months according to this data. A client might use this information to market their commercials towards younger people during the summer months and middle aged people during the spring months. 
 
 
@@ -128,5 +128,5 @@ ggplot(SeasonData) +
   theme_bw()
 ```
 
-![](Case-Study-5_files/figure-html/Graph 4-1.png)<!-- -->
+![](Case-Study-5_files/figure-html/Graph4-1.png)<!-- -->
 I chose to show this graph because I wanted to see the breakdown of the ages of death by each race. The most obvious trends we see are that white people are more likely to be harmed between the ages of 35-64 and black people are more likely to be harmed between the ages of 15-34. We can also see that for the most part, gun deaths are more common during the summer months. So a client can market their commercials during the summer months more towards middle aged white people and younger black people.

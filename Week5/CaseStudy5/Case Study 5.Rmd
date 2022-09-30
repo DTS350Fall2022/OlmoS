@@ -15,13 +15,13 @@ library(tidyverse)
 library(readr)
 library(knitr)
 
-download.file("https://raw.githubusercontent.com/fivethirtyeight/guns-data/master/full_data.csv", "GunData")
+#download.file("https://raw.githubusercontent.com/fivethirtyeight/guns-data/master/full_data.csv", "GunData")
 
 GunData <- read_csv("GunData")
 ```
 The article covers the data about gun deaths from 2012-2014. It uses an interactive graph to prove how devastating these deaths are, what they are caused by, and to who they are acted upon. The purpose of this article seems to be to inform people about the different causes of gun deaths in America.  
 
-```{r Graph 1}
+```{r Graph1}
 GunData2 <- GunData %>%
               filter(age != "", intent != "")
 
@@ -43,7 +43,7 @@ ggplot(Plot1, aes(x = agegroup, fill = sex)) +
 ```
 This graph is showing the number of deaths split up by intent. By looking at the graphs, suicide and homicide are the most common causes of death by guns. Since this is a stacked bar chart, we can see that more males have been killed by guns than females have in all four categories. 
 
-```{r Graph 2}
+```{r Graph2}
 ggplot(GunData, aes(x = age)) +
   geom_density(aes(fill = intent), alpha = 0.75, position = "fill") +
   facet_wrap(~sex) +
@@ -53,7 +53,7 @@ ggplot(GunData, aes(x = age)) +
 ```
 This graph is a density plot that shows the trends of causes of death separated by sex. Each peak shows us which values are at its highest concentration. We can see that the homicide peak is highest before the age of 30 for both men and women and the suicide peak is highest after the age of 60 for both men and women as well.
 
-```{r Graph 3}
+```{r Graph3}
 Plot1$month <- as.integer(Plot1$month)
 SeasonData <- Plot1 %>%
   mutate(season =
@@ -72,7 +72,7 @@ ggplot(SeasonData, aes(x = agegroup)) +
 ```
 I chose to do the graph in this way because I wanted to see if the seasons had a different impact on gun deaths when it comes to a person's age. Around winter you usually hear about seasonal depression which may lead to a jump in suicides, but this data does not seem to support that theory too much. In fact, the suicide deaths by gun are actually lowest in the winter months according to this data. A client might use this information to market their commercials towards younger people during the summer months and middle aged people during the spring months. 
 
-```{r Graph 4}
+```{r Graph4}
 ggplot(SeasonData) +
   geom_bar(aes(x = season, fill = agegroup)) +
   facet_wrap(~race, nrow = 3, scale = "free") +
