@@ -18,8 +18,8 @@ library(lubridate)
 ?iris
 ```
 
-```{r Iris Vizualization}
-mutate(iris, "Label")
+```{r IrisVizualization}
+#mutate(iris, "Label")
 
 largest_width <- iris %>%
   group_by(Species) %>%
@@ -52,8 +52,8 @@ ggplot(data = iris, mapping = aes(x = Sepal.Length,
   theme(legend.position = "bottom")
 ```
 
-```{r Scrabble Visualization}
-download.file("https://github.com/fivethirtyeight/data/raw/master/scrabble-games/scrabble_games.csv", "Scrabble")
+```{r ScrabbleVisualization}
+#download.file("https://github.com/fivethirtyeight/data/raw/master/scrabble-games/scrabble_games.csv", "Scrabble")
 
 ScrabbleData <- read_csv("Scrabble")
 
