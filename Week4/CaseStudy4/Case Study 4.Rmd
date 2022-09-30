@@ -17,7 +17,7 @@ library(nycflights13)
 ```
 
 Which origin airport is best to minimize my chances of a late arrival when I am using Delta Airlines?
-```{r Question 2}
+```{r Question2}
 flights %>%
   count(as.factor(carrier))
 
@@ -58,7 +58,7 @@ We can see that JFK is the only origin airport with a negative mean arrival dela
 
 
 Which destination airport is the worst airport for arrival time?
-```{r Question 3}
+```{r Question3}
 flights %>%
   count(as.factor(dest))
 
