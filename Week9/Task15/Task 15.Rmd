@@ -1,0 +1,66 @@
+---
+title: "Task 15"
+author: "Sabrina Olmo"
+date: "10/20/2022"
+output:
+  html_document:
+    keep_md: yes
+    code_folding: hide
+  pdf_document: default
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, message = FALSE}
+library(tidyverse)
+library(knitr)
+library(lubridate)
+library(riem)
+```
+
+```{r}
+dat <- tempfile()
+download.file("https://github.com/WJC-Data-Science/DTS350/raw/master/carwash.csv", "dat")
+carwash <- read_csv("dat")
+head(carwash)
+```
+
+```{r MST Time Zone}
+new_carwash <- carwash %>%
+  mutate(time = with_tz(carwash$time, tz = "US/Mountain"))
+
+head(new_carwash)
+```
+
+```{r Hourly Grouping}
+group_carwash <- new_carwash %>%
+                  mutate(hour = ceiling_date(new_carwash$time, unit = "hourly"))
+
+hour_sales <- group_carwash %>%
+  group_by(hour) %>%
+  summarise(across(amount, sum))
+```
+
+```{r Matching Temps}
+temp <- riem_measures(station = "RXE",  date_start  = "2016-05-3",  date_end  = "2016-07-08" )
+head(temp)
+
+Mountain_temp <- temp %>%
+                  mutate(time = with_tz(temp$valid, tz = "US/Mountain"))
+
+final_temp <- Mountain_temp %>%
+                mutate(hour = ceiling_date(Mountain_temp$valid, unit = "hourly")) %>%
+                select(valid, tmpf, hour) %>%
+                drop_na(tmpf)
+```
+
+```{r MergeDatasets}
+Merged_dat <- merge(hour_sales, final_temp, by = "hour")
+
+ggplot(Merged_dat, aes(x = hour, y = tmpf)) +
+  geom_line() +
+  labs(title = "Temperatures by Hour",
+       x = "Time",
+       y = "Temperature") +
+  theme_light()
+```
