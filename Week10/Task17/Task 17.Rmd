@@ -1,0 +1,42 @@
+---
+title: "Task 17"
+author: "Sabrina Olmo"
+date: "10/27/2022"
+output:
+  html_document:
+    keep_md: yes
+    code_folding: hide
+  pdf_document: default
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, message = FALSE}
+library(tidyverse)
+library(tidyquant)
+library(lubridate)
+library(timetk)
+library(dygraphs)
+```
+
+```{r}
+stocks <- tq_get(c("AAPL", "NKE", "AMZN", 
+                   "COST", "TGT", "DIS"), get = "stock.prices", from = "2021-10-01", to = today())
+
+plot1 <- stocks %>%  
+  select(symbol, date, adjusted) %>%
+  pivot_wider(names_from = symbol, values_from = adjusted) %>%
+  tk_xts(date_var = date)
+
+dygraph(plot1)
+
+plot2 <- tq_get(c("COST", "TGT"), get = "stock.prices", from = "2021-10-01", to = today()) %>% 
+    plot_time_series(date, adjusted,
+                   .facet_vars = contains("symbol"),
+                   .facet_scales = "free",
+                   .y_lab = "Adjusted",
+                   .interactive = FALSE)
+
+plot2
+```
+The three stocks I chose for myself were Apple, Amazon and Target, and my friends stocks were Nike, Costco and Disney. Looking at my first visualization we can clearly see that Costco is doing much better than the other 5 stocks by a good margin. We can also that Target is the clear second place until around July 2022 where it dips below Apple for a little while before rising again in September 2022. My second visualization shows the top performing stock for both my friend and I. My top stock was target and my friend's was Costco. We can see that Costco's trend should indicate that it rises steadily for awhile until it will eventually level out while Target's stock should decrease steadily for while before dipping somewhat significantly before it begins to rise again. The trend lines accurately predict the stock's price at the end of the time period.
