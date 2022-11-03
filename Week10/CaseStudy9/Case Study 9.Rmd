@@ -1,0 +1,50 @@
+---
+title: "Case Study 9"
+author: "Sabrina Olmo"
+date: "11/1/2022"
+output:
+  html_document:
+    keep_md: yes
+    code_folding: hide
+  pdf_document: default
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, message = FALSE}
+library(tidyverse)
+library(tidyquant)
+library(lubridate)
+library(timetk)
+library(dygraphs)
+```
+
+```{r StockCalc}
+stock_calc <- function(tickers) {
+  stocks <- tq_get(tickers, get = "stock.prices", from = today() - years(5), to = today())
+  plot <- stocks %>%
+    select(date, symbol, adjusted) %>%
+    pivot_wider(names_from = symbol, values_from = adjusted) %>%
+    tk_xts(date_var = date)
+  dygraph(plot)
+}
+
+tickers_today <- c("QQQ", "MO", "KO", "ABB","LH", "CINF")
+stock_calc(tickers_today)
+```
+
+```{r VolumeCalc}
+volume_calc <- function(ticker2) {
+  tq_get(ticker2, get = "stock.prices", from = today() - years(5), to = today()) %>%
+    ggplot(aes(x = date, y = volume/100000, color = symbol)) +
+    geom_line() +
+    facet_wrap(~symbol, scales = "free") + 
+    labs(title = "Volume Graph", 
+         x = " ",
+         y = "Volume/100000") +
+    theme_tq() +
+    theme(legend.position = "none")
+}
+
+volume_calc(tickers_today) 
+```
