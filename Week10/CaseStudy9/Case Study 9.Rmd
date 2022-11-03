@@ -48,3 +48,4 @@ volume_calc <- function(ticker2) {
 
 volume_calc(tickers_today) 
 ```
+The dygraph makes it clear on which stocks are performing well and which ones are not. Because they are all on one graph, it is easy to read, and because it is interactive, it makes it even more obvious what each value is for a given day. For my second visualization, I chose to use a line graph because they are the best option for graphing over time, and we can see the peaks and dips clearly. The question we could ask is how the performance of the stocks impacts the volume of them. Does better performance tend to lead to more volume, and doed worse performance lead to less volume?
