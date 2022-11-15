@@ -1,0 +1,90 @@
+---
+title: "Case Study 11"
+author: "Sabrina Olmo"
+date: "11/8/2022"
+output:
+  html_document:
+    keep_md: yes
+    code_folding: hide
+  pdf_document: default
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, message = FALSE}
+library(tidyverse)
+library(USAboundaries)
+library(sf)
+library(ggrepel)
+library(ggsflabel)
+library(leaflet)
+```
+
+```{r Tidying Data}
+dat <- tempfile()
+download.file("https://github.com/WJC-Data-Science/DTS350/raw/master/permits.csv", "dat")
+permit <- read_csv("dat")
+PA_permit <- permit %>%
+              filter(StateAbbr == "PA", year == 2010) %>%
+              group_by(countyname, county) %>%
+              summarise(permits = sum(value))
+
+PA_counties <- read_csv("PACounty.csv")
+PA_counties <- PA_counties %>%
+                rename("countyname" = "County Name",
+                       "county" = "County Code Number")
+PA_data <- full_join(PA_permit, PA_counties, by = "county") %>%
+            arrange(desc(permits)) %>%
+            drop_na()
+
+PA_data$rank <- cut(PA_data$permits, quantile(PA_data$permits), include.lowest = TRUE, labels = FALSE)
+
+topcounty <-  PA_data %>%
+                filter(row_number() == 1)
+Q1 <- PA_data[-1,] %>%
+        filter(rank == 4)
+Q2 <- PA_data %>%
+        filter(rank == 3)
+Q3 <- PA_data %>%
+        filter(rank == 2)
+Q4 <- PA_data %>%
+        filter(rank == 1)
+worstcounty <- PA_data %>%
+                filter(row_number() == 33)
+```
+
+```{r Plot, message = FALSE}
+leaflet() %>%
+  addTiles() %>%
+  addCircleMarkers(data = topcounty,
+                   label = ~countyname.x,
+                   popup = ~as.character(permits),
+                   color = "blue",
+                   fillOpacity = 1) %>%
+  addCircleMarkers(data = Q1,
+                   label = ~countyname.x,
+                   popup = ~as.character(permits),
+                   color = "green",
+                   fillOpacity = 1) %>%
+  addCircleMarkers(data = Q2,
+                   label = ~countyname.x,
+                   popup = ~as.character(permits),
+                   color = "orange",
+                   fillOpacity = 1) %>%
+  addCircleMarkers(data = Q3,
+                   label = ~countyname.x,
+                   popup = ~as.character(permits),
+                   color = "yellow",
+                   fillOpacity = 1) %>%
+  addCircleMarkers(data = Q4,
+                   label = ~countyname.x,
+                   popup = ~as.character(permits),
+                   color = "red",
+                   fillOpacity = 1) %>%
+  addCircleMarkers(data = worstcounty,
+                   label = ~countyname.x,
+                   popup = ~as.character(permits),
+                   color = "purple",
+                   fillOpacity = 1)
+```
+I can advise my friend that Allegheny County is the best county in Pennsylvania in terms of the number of permits in the year 2010. The worst county in terms of the number of permits is Forest County. The green markers on the map represent the top 25 percentile of permits in Pennsylvania if my friend can not move directly into Allegheny County. I would advise my friend to stay away from the red markers because they represent the bottom 25th percentile in permits. 
