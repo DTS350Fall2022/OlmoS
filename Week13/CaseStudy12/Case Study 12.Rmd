@@ -1,0 +1,94 @@
+---
+title: "Case Study 12"
+author: "Sabrina Olmo"
+date: "11/17/2022"
+output:
+  html_document:
+    keep_md: yes
+    code_folding: hide
+  pdf_document: default
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, message = FALSE}
+library(tidyverse)
+library(tidyquant)
+library(lubridate)
+library(gganimate)
+library(gifski)
+library(dygraphs)
+library(timetk)
+```
+
+```{r Getting Data}
+avocado <- read_csv("avocado.csv")
+
+state_data <- avocado %>%
+                filter(region == "California")
+
+US_data <- avocado %>%
+              filter(region == "TotalUS") %>%
+              rename("TotalVolume" = "Total Volume")
+
+region_data <- avocado %>%
+                filter(region %in% c("GreatLakes", "Midsouth", "Northeast", "NorthernNewEngland",
+                                   "Plains", "SouthCentral", "Southeast", "West", "WestTexNewMexico")) %>%       
+                rename("TotalVolume" = "Total Volume") %>%
+                mutate(year = year(Date))
+
+city_data <- avocado %>%
+              filter(!region %in% c("GreatLakes", "Midsouth", "Northeast", "NorthernNewEngland",
+                                   "Plains", "SouthCentral", "Southeast", "West", "WestTexNewMexico", 
+                                   "California", "TotalUS")) %>%
+              rename("TotalVolume" = "Total Volume")
+
+costalcities <- city_data %>%
+                  filter(region %in% c("LosAngeles", "SanDiego", "SanFrancisco",
+                                       "MiamiFtLauderdale", "Tampa", "Portland"))
+```
+
+```{r AvocadoPlots}
+USplot <- ggplot(US_data) +
+          geom_line(aes(x = Date, y = AveragePrice)) +
+          labs(title = "Date: {frame_along}",
+               x = "Date",
+               y = "Average Price") +
+               theme_bw()
+
+USplot + transition_reveal(Date)
+
+Regionplot <- ggplot(data = region_data, mapping = aes(x = Date, y = AveragePrice, color = TotalVolume)) +
+                geom_point(size = 0.25) +
+                facet_wrap(~region) +
+                shadow_trail(distance = 0.05) +
+                labs(title = "Date: {frame_along}",
+                             x = "Date",
+                             y = "Average Price",
+                     color = "Total Volume/1000") +
+                             theme_bw()
+
+Regionplot + transition_reveal(Date)
+
+ggplot(costalcities) +
+  geom_point(aes(x = Date, y = AveragePrice, color = region, size = TotalVolume/1000)) +
+  facet_wrap(~region) +
+  labs(title = "Avocado Prices by City",
+       x = "Date",
+       y = "AveragePrice") +
+  theme_bw()
+```
+I chose to to use the cities that are on the coast for the last plot. To me it makes sense that the coastal cities would sell avocados for a somewhat lower price with the best quality because of the increasing availability compared to inland cities. Through this I would advise my friend to look for jobs in Los Angeles or Portland because it seems like the avocados are sold at a higher volume for a lower average price. We can see that the average prices for avocados are highest in San Francisco and Tampa, so I would not advise my friend to look for a job in those cities unless absolutely necessary. 
+
+```{r StockData}
+stocks <- tq_get(c("CVGW", "AVO"), get = "stock.prices", from = today() - years(2), to = today())
+
+stockplot <- stocks %>%  
+          select(symbol, date, adjusted) %>%
+          pivot_wider(names_from = symbol, values_from = adjusted) %>%
+          tk_xts(date_var = date) 
+
+dygraph(stockplot, main = "Adjusted Values for AVO and CVGW Stocks") %>%
+  dyAxis("y", label = "Adjusted")
+```
+Looking at the stock data we can see that CVGW has suffered a decrease in adjusted value but it is still higher than AVO which is much more consistent, but is also a lower value. Overall it seems like investing in avocado stocks are not the best investment. 
